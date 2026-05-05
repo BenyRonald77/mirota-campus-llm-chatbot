@@ -1,31 +1,37 @@
-# Chatbot Mirota Kampus (Fine-tuned LoRA)
+# Mirota Campus LLM Chatbot
 
-Chatbot Streamlit yang memuat **base LLM (gated)** + **LoRA adapter hasil fine-tuning**, lalu menjalankan **multi-turn chat** dengan pengaturan generation (max history, max tokens, temperature, top-p) dan tombol **5 skenario pengujian** dari dataset.
+This project is a Large Language Model fine-tuning project for building a question-answering chatbot about Mirota Kampus. The model is fine-tuned using instruction-based QA data and LoRA to make training more efficient.
 
----
+## 📌 Overview
 
-## Ringkasan Sistem
+The goal of this project is to fine-tune an instruction-following language model so it can answer user questions related to Mirota Kampus clearly, politely, and accurately.
 
-### Model & Pipeline
-| Komponen | Nilai |
-|---|---|
-| Base model | `meta-llama/Llama-3.2-1B-Instruct` (gated) |
-| Adapter | LoRA via **PEFT** (folder `output_lora/`) |
-| Task | Chat / text-generation |
-| Framework | `transformers` + `peft` + `torch` |
-| App | Streamlit |
+The dataset contains question-answer pairs about Mirota Kampus, including store information, shopping needs, student needs, product availability, and customer service responses.
 
-### Fitur Utama di App
-- **Load gated model** menggunakan `HF_TOKEN` (Streamlit Secrets / Environment Variable).
-- **Attach LoRA adapter** dari folder `output_lora/`.
-- **Multi-turn chat history** (pesan sebelumnya dipakai sebagai konteks).
-- **Pengaturan generation** via sidebar:
-  - Max context messages (history)
-  - Max new tokens
-  - Deterministic (no sampling)
-  - Temperature
-  - Top-p
-- **5 skenario pengujian** (klik → auto kirim prompt) khusus dataset Mirota.
-- UI chat dengan **avatar** user & bot.
+## ✨ Features
 
-### Dikarenakan saat upload ke streamlit terbatas CPU cloud streamlit, untuk menghindari Out Of Memory, pada Code Streamlit Projek ini, kami turukan performanya agar bisa upload aplikasinya ke streamlit
+- Load QA dataset from JSON file
+- Validate instruction, input, and output fields
+- Split dataset into train, validation, and test sets
+- Format prompts using chat template
+- Tokenize instruction-based dataset
+- Build custom PyTorch Dataset and collate function
+- Load base LLM from Hugging Face
+- Fine-tune model using LoRA / PEFT
+- Track training and validation loss
+- Save LoRA adapter and tokenizer
+- Generate responses on test data
+- Save test predictions into JSON
+- Evaluate model responses using an evaluator LLM
+- Save evaluation scores and statistics
+
+## Streamlit 
+
+https://projekuaspmapingouin-ftgud4wkdgfypgf2982hv4.streamlit.app/
+
+## 🧠 Model
+
+Base model:
+
+```txt
+meta-llama/Llama-3.2-1B-Instruct
